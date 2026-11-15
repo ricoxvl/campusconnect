@@ -7,7 +7,7 @@ The local Phase 3 implementation is tested; **the pilot is not deployed or clear
 - [x] Existing Phase 2 baseline tested before incremental changes.
 - [x] Additive local D1 migration; schema/query/atomic write tests.
 - [x] Protected responsive admin editor, metadata managers, CSV preview/import, publication/unpublish/archive confirmations and audit history.
-- [x] Source-backed candidate manifest and three local **unverified drafts**, with explicit unresolved review steps.
+- [x] Original November 7 source-backed manifest and three historical local **unverified drafts**; November 15 refresh stages another 15 *review-only* occurrences in dated CSV/JSON and points the local-only preparation helper at that queue. No production import or event publication was performed.
 - [x] Duplicate detection, cancellation, verification/registration freshness, expired-event exclusion and quality queues.
 - [x] Up to three deterministic interest/availability recommendations with explanations, including interest-only students.
 - [x] Student loading/error/empty states, official source links, saved-record refresh and persistent preferences/bookmarks.

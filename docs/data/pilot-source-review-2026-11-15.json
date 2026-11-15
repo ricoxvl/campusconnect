@@ -1,0 +1,130 @@
+{
+  "observedDate": "2026-11-15",
+  "observationScope": "Public Comet Calendar individual event pages; not a live sync or final event verification.",
+  "publicationStatus": "NOT_PUBLISHED",
+  "verificationStatus": "HUMAN_REVIEW_REQUIRED",
+  "candidateCSV": "docs/data/pilot-candidates-2026-11-15.csv",
+  "candidateCount": 15,
+  "timezone": "America/Chicago",
+  "organizers": [
+    {
+      "id": "utd-comet-cupboard",
+      "name": "Comet Cupboard",
+      "url": null
+    },
+    {
+      "id": "utd-intercultural-programs",
+      "name": "Intercultural Programs",
+      "url": null
+    },
+    {
+      "id": "utd-jsom",
+      "name": "Naveen Jindal School of Management",
+      "url": null
+    },
+    {
+      "id": "utd-university-recreation",
+      "name": "University Recreation",
+      "url": null
+    },
+    {
+      "id": "utd-jonsson-school",
+      "name": "Erik Jonsson School of Engineering and Computer Science",
+      "url": null
+    },
+    {
+      "id": "utd-jonsson-career-services",
+      "name": "Jonsson Career Services",
+      "url": null
+    },
+    {
+      "id": "utd-student-org-center",
+      "name": "Student Organization Center",
+      "url": null
+    },
+    {
+      "id": "utd-anime-orchestra",
+      "name": "Anime Orchestra Ensemble",
+      "url": null
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://calendar.utdallas.edu/event/hunger-homelessness-awareness-week-kickoff",
+      "occurrences": [
+        "2026-11-16T12:00:00-06:00"
+      ],
+      "review": "Confirm the Atrium room, organizer, same-day occurrence and whether food/activity details have changed."
+    },
+    {
+      "url": "https://calendar.utdallas.edu/event/conversational-english-class-6465",
+      "occurrences": [
+        "2026-11-16T12:00:00-06:00",
+        "2026-11-30T12:00:00-06:00",
+        "2026-12-07T12:00:00-06:00"
+      ],
+      "review": "SSB 2.400 is the location field, while copy mentions ICP Multipurpose Room; confirm they refer to the same room. International-student/spouse audience and no-registration statement must be checked."
+    },
+    {
+      "url": "https://calendar.utdallas.edu/event/travel-themed-friendship-bracelets",
+      "occurrences": [
+        "2026-11-16T14:00:00-06:00",
+        "2026-11-19T12:00:00-06:00"
+      ],
+      "review": "The source provides Commons outside the Undergraduate Lounge without building name. Confirm building, exact location and recurrence."
+    },
+    {
+      "url": "https://calendar.utdallas.edu/event/vinyasa-yoga-1197",
+      "occurrences": [
+        "2026-11-16T15:00:00-06:00",
+        "2026-11-18T15:00:00-06:00"
+      ],
+      "review": "Confirm current UREC access and participation rules. Recurring source gives exact dates/time and multipurpose room."
+    },
+    {
+      "url": "https://calendar.utdallas.edu/event/jonsson-school-effective-communication",
+      "occurrences": [
+        "2026-11-16T16:00:00-06:00"
+      ],
+      "review": "Confirm this session remains open to student organization leaders, including students outside Jonsson where applicable."
+    },
+    {
+      "url": "https://calendar.utdallas.edu/event/nokia-tabling-in-ecs-south",
+      "occurrences": [
+        "2026-11-17T09:00:00-06:00"
+      ],
+      "review": "Source lists specific engineering majors/academic levels. Do not present as open to all students; verify whether 12twenty is used for RSVP without inventing a URL."
+    },
+    {
+      "url": "https://calendar.utdallas.edu/event/global-family-cafe-1151",
+      "occurrences": [
+        "2026-11-17T09:30:00-06:00",
+        "2026-12-01T09:30:00-06:00",
+        "2026-12-08T09:30:00-06:00"
+      ],
+      "review": "Use this particular event page, whose location is SU Galaxy Room C. A similarly named listing has a different location. Recheck date, international-family audience and minors policy."
+    },
+    {
+      "url": "https://calendar.utdallas.edu/event/soc-grocery-bingo-5959",
+      "occurrences": [
+        "2026-11-19T12:30:00-06:00"
+      ],
+      "review": "Confirm Galaxy Rooms A/B, event participation and limited refreshments or prizes."
+    },
+    {
+      "url": "https://calendar.utdallas.edu/event/fall-into-rhythm-anime-orchestra-ensemble-fall-2026-variety-concert",
+      "occurrences": [
+        "2026-11-20T18:30:00-06:00"
+      ],
+      "review": "Check whether weather has moved it from the Plinth to the first floor of Student Union, and whether the event remains scheduled."
+    }
+  ],
+  "restrictions": [
+    "Draft import must not set verified or published state. Real-event information may change before the event.",
+    "Registration URLs were not independently verified and are left empty; when the page explicitly says registration is not required, that statement is private review context only.",
+    "Newcomer-friendly statuses are unknown. Never invent free admission, affiliation, organizer endorsements, or registration availability.",
+    "Event categories and interest tags are CampusConnect curator classifications; source organizers are derived from page department/group or organizer self-description.",
+    "Every instance must be freshly checked by an authorized administrator before any public release. Do not automatically promote this snapshot.",
+    "Do not import candidates whose occurrences have passed. This file is dated and should be replaced or archived for a later pilot."
+  ]
+}
