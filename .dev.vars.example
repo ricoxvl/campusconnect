@@ -1,0 +1,8 @@
+# Copy to .dev.vars. Never commit real tokens. No VITE_ prefix on any secret.
+# Generate a random token: node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
+# Paste it here and enter it on /admin for loopback-only local testing.
+ADMIN_DEV_TOKEN=""
+# Production uses Cloudflare Access. Configure these in the production Worker settings:
+# ACCESS_TEAM_DOMAIN="your-team.cloudflareaccess.com"
+# ACCESS_AUD="your-access-application-audience"
+# ADMIN_EMAILS="administrator@example.com"

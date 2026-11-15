@@ -1,0 +1,2 @@
+title,description,category_id,interest_ids,organizer_id,starts_at,ends_at,location,source_name,source_url,registration_url,registration_details,fictional,what_to_expect
+Sample CSV workshop,Fictional example for import review only.,technology,academics,test-organizer,2030-01-03T14:00:00-06:00,2030-01-03T15:00:00-06:00,Example classroom,Fictional test dataset,,,,true,Example only. Not a university listing.

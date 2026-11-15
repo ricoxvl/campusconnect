@@ -1,0 +1,25 @@
+{
+  "observedAt": "2026-11-07T23:03:51.827040+00:00",
+  "publicationStatus": "not_published",
+  "verificationStatus": "requires_fresh_administrator_review",
+  "organizers": [
+    {
+      "id": "utd-scc-csr",
+      "name": "Student Counseling Center and Center for Students in Recovery",
+      "url": null
+    },
+    {
+      "id": "utd-student-wellness",
+      "name": "Student Wellness",
+      "url": null
+    }
+  ],
+  "notes": [
+    "Facts were read from two public official Comet Calendar pages. This is a small manually researched candidate set, not an automated feed.",
+    "Spanglish recurrence dates November 10 and 17, 2026 were explicitly listed at 3:00\u20134:30 PM in SSB 4.500. The base date on the page was October 27; recurring occurrences are separate records.",
+    "Harvest & Gratitude is listed November 17, 2026 noon\u20132 PM. Host metadata uses the listed department Student Wellness. Confirm hosting responsibilities in the final human review.",
+    "No registration URL was provided in either inspected listing. No URL or newcomer-friendly status was inferred.",
+    "The SOC events page could not be fetched (502). Its links and the SUAAB group page are discovery aids, not sufficient evidence of a current event.",
+    "Source pages can change. These candidates are imported as unverified drafts and must not be published until a fresh manual check."
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "name": "campusconnect",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "tsc -b && tsc -p tsconfig.worker.json && vite build",
+    "preview": "wrangler dev --local --ip 127.0.0.1 --port 8787",
+    "test": "vitest run && vitest run --config vitest.worker.config.ts && vitest run --config vitest.integration.config.ts",
+    "test:watch": "vitest",
+    "dev:client": "vite --host 127.0.0.1",
+    "dev:api": "wrangler dev --local --ip 127.0.0.1 --port 8787",
+    "build:client": "tsc -b && vite build",
+    "test:client": "vitest run",
+    "test:api": "vitest run --config vitest.worker.config.ts",
+    "db:migrate": "wrangler d1 migrations apply campusconnect-local --local",
+    "db:seed": "node scripts/seed-local.mjs",
+    "check:worker": "wrangler deploy --dry-run --env \"\" --outdir work/worker-build",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "setup:local": "node scripts/setup-local.mjs",
+    "smoke:local": "node scripts/smoke-local.mjs",
+    "prepare:pilot": "node scripts/prepare-pilot.mjs",
+    "test:browser": "playwright test"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.2.8",
+    "@tailwindcss/vite": "^4.1.17",
+    "jose": "^6.2.15",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.9.5",
+    "tailwindcss": "^4.1.17",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261107.1",
+    "@playwright/test": "^1.65.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^5.1.0",
+    "jsdom": "^27.1.0",
+    "miniflare": "^4.20260730.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.2",
+    "vitest": "^4.0.8",
+    "wrangler": "^4.158.0"
+  },
+  "overrides": {
+    "miniflare@^4.20260730.0": {
+      "sharp": "0.35.5",
+      "undici": "7.30.1"
+    }
+  }
+}
