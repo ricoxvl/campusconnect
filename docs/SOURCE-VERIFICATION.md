@@ -23,6 +23,10 @@ Use a university-hosted event page or a clearly authenticated hosting organizati
 
 Descriptions are brief paraphrases of the inspected listings. No registration URL was shown on either inspected page; registration remains empty. Newcomer status is unknown; do not infer it from an event title or general welcoming language. Categories/interests are curator classifications, not official endorsements. Organizer URLs remain null because none was verified. These date-specific candidates will become obsolete; skip/archive ended occurrences and research fresh candidates rather than shifting their dates.
 
+## November 15, 2026 candidate refresh
+
+A newer set of **15 proposed occurrences** across nine individual official event pages is recorded in [PILOT-CANDIDATES-2026-11-15.md](PILOT-CANDIDATES-2026-11-15.md), `docs/data/pilot-candidates-2026-11-15.csv`, and `docs/data/pilot-source-review-2026-11-15.json`. These are still **unverified drafts** with explicit source/eligibility/location review requirements; the original three candidates above remain a historical snapshot, not a current feed. `npm run prepare:pilot` now reads the November 15 files and only imports into local development; no publishing or remote action occurs.
+
 ## Review checklist for every occurrence
 
 1. Open the individual official source using the dashboard link. Check page ownership and the actual date/recurrence. If unavailable, keep a draft and record the issue; do not fill gaps from memory.
