@@ -24,13 +24,13 @@ async function request(path, method = "GET", body) {
   return data;
 }
 const review = JSON.parse(
-  readFileSync("docs/data/pilot-source-review.json", "utf8"),
+  readFileSync("docs/data/pilot-source-review-2026-11-15.json", "utf8"),
 );
 const existing = (await request("/organizers")).data;
 for (const organizer of review.organizers)
   if (!existing.some((item) => item.id === organizer.id))
     await request("/organizers", "POST", organizer);
-const csv = readFileSync("docs/data/pilot-candidates.csv", "utf8");
+const csv = readFileSync("docs/data/pilot-candidates-2026-11-15.csv", "utf8");
 const preview = (await request("/import/preview", "POST", { csv })).data;
 const rows = preview.filter((row) => !row.errors.length).map((row) => row.row);
 if (!rows.length) {
