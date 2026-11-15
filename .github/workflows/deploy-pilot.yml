@@ -1,0 +1,88 @@
+name: Deploy CampusConnect pilot (manual only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_fresh_database:
+        description: "I created a dedicated production D1 database and reviewed migrations."
+        required: true
+        type: boolean
+        default: false
+      confirm_access_policy:
+        description: "I configured Cloudflare Access for /admin* and /api/v1/admin*."
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: campusconnect-pilot-deploy
+  cancel-in-progress: false
+
+jobs:
+  pilot-release:
+    name: Validate, migrate, deploy and smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: pilot
+    env:
+      WRANGLER_SEND_METRICS: "false"
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CAMPUSCONNECT_D1_DATABASE_ID: ${{ vars.CAMPUSCONNECT_D1_DATABASE_ID }}
+      CAMPUSCONNECT_HOST: ${{ vars.CAMPUSCONNECT_HOST }}
+      CAMPUSCONNECT_ACCESS_TEAM_DOMAIN: ${{ vars.CAMPUSCONNECT_ACCESS_TEAM_DOMAIN }}
+      CAMPUSCONNECT_ACCESS_AUD: ${{ vars.CAMPUSCONNECT_ACCESS_AUD }}
+      CAMPUSCONNECT_ADMIN_EMAILS: ${{ secrets.CAMPUSCONNECT_ADMIN_EMAILS }}
+      CAMPUSCONNECT_CONFIRM_FRESH_DB: ${{ inputs.confirm_fresh_database }}
+      CAMPUSCONNECT_CONFIRM_ACCESS_POLICY: ${{ inputs.confirm_access_policy }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install exact dependencies
+        run: npm ci
+      - name: Run application tests and production build
+        run: |
+          npm test
+          node --test scripts/prepare-release.test.mjs
+          npm run build
+      - name: Verify explicit approvals and Cloudflare credentials
+        run: |
+          test "$CAMPUSCONNECT_CONFIRM_FRESH_DB" = "true"
+          test "$CAMPUSCONNECT_CONFIRM_ACCESS_POLICY" = "true"
+          test -n "$CLOUDFLARE_API_TOKEN"
+          test -n "$CLOUDFLARE_ACCOUNT_ID"
+      - name: Generate ignored production config and inspect package dry-run
+        run: |
+          node scripts/prepare-release.mjs
+          npx wrangler deploy --config wrangler.release.jsonc --env production --dry-run --outdir work/pilot-dry-run
+      - name: Apply reviewed migrations to dedicated production D1
+        run: npx wrangler d1 migrations apply campusconnect-production --config wrangler.release.jsonc --env production --remote
+      - name: Deploy application to Cloudflare Workers
+        run: npx wrangler deploy --config wrangler.release.jsonc --env production
+      - name: Check live student API and deny anonymous administrator
+        run: |
+          node --input-type=module <<'NODE'
+          const origin = "https://" + process.env.CAMPUSCONNECT_HOST;
+          for (const path of ["/api/v1/health", "/api/v1/categories", "/api/v1/events"]) {
+            const response = await fetch(origin + path, { redirect: "manual" });
+            if (response.status !== 200) throw new Error(`${path}: ${response.status}`);
+          }
+          const admin = await fetch(origin + "/api/v1/admin/session", { redirect: "manual" });
+          if (admin.status === 200) throw new Error("Anonymous administrator route was accessible.");
+          console.log("Student endpoints healthy and anonymous admin endpoint not permitted.");
+          NODE
+      - name: Deployment follow-up
+        run: |
+          {
+            echo "### CampusConnect pilot release"
+            echo ""
+            echo "Deployed application: https://${CAMPUSCONNECT_HOST}"
+            echo ""
+            echo "Before inviting students: test real administrator login and unauthorized identity denial; manually verify and publish source-backed event drafts; check mobile Safari and Chrome. See docs/PILOT-READINESS.md."
+          } >> "$GITHUB_STEP_SUMMARY"
