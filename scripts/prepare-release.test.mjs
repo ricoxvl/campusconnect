@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createPilotConfig } from "./prepare-release.mjs";
+import { createPilotConfig, parseJsonc } from "./prepare-release.mjs";
+import { readFileSync } from "node:fs";
 
 const base = {
   name: "campusconnect-development",
@@ -78,4 +79,26 @@ test("refuses missing, placeholder and malformed production configuration", () =
   const unsafe = structuredClone(base);
   unsafe.env.production.vars.ALLOW_FICTIONAL_EVENTS = "true";
   assert.throws(() => createPilotConfig(unsafe, required));
+});
+
+
+test("parses the real Wrangler JSONC (including its trailing commas)", () => {
+  const real = readFileSync(new URL("../wrangler.jsonc", import.meta.url), "utf8");
+  const parsed = parseJsonc(real);
+  assert.equal(parsed.env.production.name, "campusconnect-production");
+  assert.equal(parsed.env.production.vars.ALLOW_FICTIONAL_EVENTS, "false");
+});
+
+test("JSONC parser handles comments and URLs without corrupting strings", () => {
+  const sample = [
+    "{",
+    '  // An example comment',
+    '  "source": "https://calendar.utdallas.edu/example",',
+    '  "nested": {"items": [1, 2,],}, /* trailing comment */',
+    "}",
+  ].join("\n");
+  assert.deepEqual(parseJsonc(sample), {
+    source: "https://calendar.utdallas.edu/example",
+    nested: { items: [1, 2] },
+  });
 });
