@@ -11,7 +11,21 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      - run: node --test scripts/prepare-release.test.mjs
       - run: npm run build
       - run: npm run check:worker
         env:
           WRANGLER_SEND_METRICS: "false"
+      - name: Dry-run generated pilot release config (no cloud credentials)
+        run: |
+          node scripts/prepare-release.mjs
+          npx wrangler deploy --config wrangler.release.jsonc --env production --dry-run --outdir work/pilot-ci-dry-run
+        env:
+          WRANGLER_SEND_METRICS: "false"
+          CAMPUSCONNECT_D1_DATABASE_ID: "5bc8b581-0abb-4c41-a746-47dd174d7a15"
+          CAMPUSCONNECT_HOST: "campusconnect-production.example-workers.workers.dev"
+          CAMPUSCONNECT_ACCESS_TEAM_DOMAIN: "example.cloudflareaccess.com"
+          CAMPUSCONNECT_ACCESS_AUD: "f43a724dc9914ab2897dff7a299c723e"
+          CAMPUSCONNECT_ADMIN_EMAILS: "owner@example.org"
+          CAMPUSCONNECT_CONFIRM_FRESH_DB: "true"
+          CAMPUSCONNECT_CONFIRM_ACCESS_POLICY: "true"
