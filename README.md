@@ -49,13 +49,13 @@ The combined development runner uses a workspace-local Wrangler config directory
 | `npm run prepare:pilot` | Import reviewed-source candidates as local unverified drafts only |
 | `npm run db:seed`                        | Insert local fictional examples without overwriting events                     |
 
-To prepare the three manually researched source-backed **local drafts** with the servers running:
+To prepare the November 15 candidate queue (**15 source-backed occurrences**, as unverified local drafts) with the servers running:
 
 ```sh
 npm run prepare:pilot
 ```
 
-This loopback-only command preserves existing records, creates the two documented organizer records if absent, and uses the protected CSV API. It never verifies or publishes. Candidate dates were observed on November 7, 2026; recheck sources and remove expired candidates before reuse. Production entry uses the dashboard after deployment approval, not this helper.
+This loopback-only command preserves existing records, creates eight source-attributed organizer records if absent, and uses the protected CSV API. It never verifies or publishes. The dated 15-event candidate CSV was researched on November 15, 2026; recheck every occurrence, eligibility and location and skip expired candidates before any approval. See [pilot source queue](docs/PILOT-CANDIDATES-2026-11-15.md). Production entry uses the dashboard after deployment approval, not this helper.
 
 See [VALIDATION.md](VALIDATION.md) for measured results and verification limits.
 
