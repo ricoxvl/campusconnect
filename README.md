@@ -59,6 +59,8 @@ This loopback-only command preserves existing records, creates the two documente
 
 See [VALIDATION.md](VALIDATION.md) for measured results and verification limits.
 
+**Phase 4:** The first no-cost Cloudflare pilot URL can be created only through the [manually gated release workflow and owner setup](docs/PHASE4-RELEASE.md). The checked-in production configuration intentionally has placeholder identifiers, no public endpoint and no live database. No event is automatically published.
+
 ## Student flows
 
 Welcome → multiple interests → multiple days and time periods → personalized Top 3. Students can also browse directly, combine keyword/category/date/availability filters, page through results, view details and source information, and save multiple events. Categories come from the API. Search/filter state remains in the URL and survives returning from details.
