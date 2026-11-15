@@ -4,6 +4,71 @@ import { fileURLToPath } from "node:url";
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const EMAIL = /^[^\s@,]+@[^\s@,]+\.[^\s@,]+$/;
 
+/** Parse Wrangler JSONC, respecting string literals, comments and trailing commas. */
+export function parseJsonc(input) {
+  let clean = "";
+  let quoted = false, escaped = false, lineComment = false, blockComment = false;
+  for (let i = 0; i < input.length; i++) {
+    const c = input[i], next = input[i + 1];
+    if (lineComment) {
+      if (c === "\n") {
+        lineComment = false;
+        clean += "\n";
+      } else clean += " ";
+      continue;
+    }
+    if (blockComment) {
+      if (c === "*" && next === "/") {
+        clean += "  ";
+        i++;
+        blockComment = false;
+      } else clean += c === "\n" ? "\n" : " ";
+      continue;
+    }
+    if (quoted) {
+      clean += c;
+      if (escaped) escaped = false;
+      else if (c === "\\") escaped = true;
+      else if (c === '"') quoted = false;
+      continue;
+    }
+    if (c === '"') {
+      quoted = true;
+      clean += c;
+    } else if (c === "/" && next === "/") {
+      clean += "  ";
+      lineComment = true;
+      i++;
+    } else if (c === "/" && next === "*") {
+      clean += "  ";
+      blockComment = true;
+      i++;
+    } else {
+      clean += c;
+    }
+  }
+  let output = "", inString = false, escape = false;
+  for (let i = 0; i < clean.length; i++) {
+    const c = clean[i];
+    if (inString) {
+      output += c;
+      if (escape) escape = false;
+      else if (c === "\\") escape = true;
+      else if (c === '"') inString = false;
+    } else if (c === '"') {
+      inString = true;
+      output += c;
+    } else if (c === ",") {
+      let j = i + 1;
+      while (j < clean.length && /\s/.test(clean[j])) j++;
+      if (clean[j] !== "}" && clean[j] !== "]") output += c;
+    } else {
+      output += c;
+    }
+  }
+  return JSON.parse(output);
+}
+
 function requireValue(values, key) {
   const value = values[key]?.trim();
   if (!value) throw new Error(`Missing required release setting: ${key}`);
@@ -93,7 +158,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
       "Both explicit fresh-database and Cloudflare Access policy confirmations are required.",
     );
   }
-  const source = JSON.parse(readFileSync("wrangler.jsonc", "utf8"));
+  const source = parseJsonc(readFileSync("wrangler.jsonc", "utf8"));
   const config = createPilotConfig(source, process.env);
   const path = "wrangler.release.jsonc";
   writeFileSync(path, JSON.stringify(config, null, 2) + "\n", {
